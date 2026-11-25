@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#173D2C" />
+    <title>همسفر | سفر بعدی‌ات از اینجا شروع می‌شه</title>
+    <meta
+      name="description"
+      content="همسفر؛ پیدا کردن همسفر و تورهای گروهی، جست‌وجوی توصیفی، برنامه‌ریز سفر روزانه و تجربه سفرهای بهتر."
+    />
+    <meta property="og:title" content="همسفر | پلتفرم تشکیل گروه سفر" />
+    <meta
+      property="og:description"
+      content="مقصدت رو توصیف کن؛ ما کمک می‌کنیم سفر مناسب خودت رو پیدا کنی."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/Vazirmatn-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <script>
+      // Apply the saved / system colour scheme before first paint (no flash).
+      (function () {
+        try {
+          var saved = localStorage.getItem("hamsafar.theme");
+          var dark = saved
+            ? saved === "dark"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>برای استفاده از همسفر، جاوااسکریپت مرورگر را فعال کنید.</noscript>
+    <script type="module" src="/src/app/main.tsx"></script>
+  </body>
+</html>

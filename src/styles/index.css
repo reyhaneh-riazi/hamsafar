@@ -1,0 +1,193 @@
+@import "tailwindcss";
+@config '../../tailwind.config.ts';
+
+/* Class-based dark mode (the ThemeProvider toggles `.dark` on <html>). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Self-hosted Persian font — OFL licence in public/fonts/OFL.txt */
+@font-face {
+  font-family: "Vazirmatn";
+  src:
+    url("/fonts/Vazirmatn-Variable.woff2") format("woff2-variations"),
+    url("/fonts/Vazirmatn-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Semantic colour tokens (RGB triplets so Tailwind can apply alpha) ---------- */
+:root {
+  --c-canvas: 247 244 238;
+  --c-surface: 255 255 255;
+  --c-surface-muted: 240 245 241;
+  --c-surface-raised: 255 255 255;
+  --c-ink: 18 40 32;
+  --c-ink-muted: 82 98 91;
+  --c-ink-soft: 128 140 134;
+  --c-line: 226 231 225;
+  --c-brand: 29 78 55;
+  --c-tint-mint: 232 244 236;
+  --c-tint-lilac: 242 237 251;
+  --c-tint-peach: 253 238 232;
+  --c-tint-butter: 251 243 228;
+  --c-tint-sky: 232 243 250;
+  --c-tint-sage: 237 242 235;
+  --c-plum: 112 64 160;
+  --c-success: 34 139 84;
+  --c-warning: 196 125 18;
+  --c-danger: 205 62 52;
+  --c-info: 32 110 170;
+  color-scheme: light;
+}
+
+.dark {
+  --c-canvas: 12 22 19;
+  --c-surface: 20 36 31;
+  --c-surface-muted: 24 44 37;
+  --c-surface-raised: 28 49 42;
+  --c-ink: 240 238 230;
+  --c-ink-muted: 178 190 183;
+  --c-ink-soft: 128 145 137;
+  --c-line: 43 64 57;
+  --c-brand: 132 204 160;
+  --c-tint-mint: 25 52 42;
+  --c-tint-lilac: 41 33 56;
+  --c-tint-peach: 54 36 30;
+  --c-tint-butter: 52 42 27;
+  --c-tint-sky: 24 43 57;
+  --c-tint-sage: 34 48 30;
+  --c-plum: 196 160 238;
+  --c-success: 104 200 140;
+  --c-warning: 236 186 96;
+  --c-danger: 246 128 112;
+  --c-info: 120 186 236;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-coral-500, #f26b4f);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: rgb(242 107 79 / 0.25);
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* LTR islands inside RTL text: phone numbers, OTP, emails, codes */
+  .ltr-island {
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--c-line) / 0.55) 25%,
+      rgb(var(--c-line)) 37%,
+      rgb(var(--c-line) / 0.55) 63%
+    );
+    background-size: 400% 100%;
+    @apply animate-shimmer;
+  }
+  /* Scroll-reveal: elements start hidden and get `.is-visible` from useReveal() */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* About page journey animation */
+@keyframes journey-dash {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+@keyframes journey-cloud {
+  from {
+    inset-inline-start: -8%;
+  }
+  to {
+    inset-inline-start: 92%;
+  }
+}
+.journey-dash {
+  animation: journey-dash 1.6s linear infinite;
+}
+.journey-cloud {
+  inset-inline-start: 10%;
+  animation: journey-cloud 20s linear infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-dash,
+  .journey-cloud {
+    animation: none;
+  }
+}
+
+/* Global API request indicator (RequestProgressBar) */
+@keyframes request-bar {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(320%);
+  }
+}

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-standalone/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example
+!.env.production
+hooks-authentication.txt
+hooks-dev.txt
